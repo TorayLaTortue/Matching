@@ -6,7 +6,7 @@
         
         // Connexion à la base de données PostgreSQL
         $host = "localhost";
-        $port = "5432"; // Port par défaut de PostgreSQL
+     
         $dbname = "Matching"; // Nom de votre base de données
         $user = "Postgres"; // Votre nom d'utilisateur PostgreSQL
         $password = "Vemer835"; // Votre mot de passe PostgreSQL
