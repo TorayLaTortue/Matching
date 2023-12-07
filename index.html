@@ -76,7 +76,7 @@ button {
 }
     </style>
 </head>
-<form action="/ma-page-de-traitement" method="post">
+<form action="bdd.php" method="post">
     <ul>
       <li>
         <label for="name">Nom&nbsp;:</label>
@@ -91,6 +91,12 @@ button {
         <textarea id="msg" name="user_message"></textarea>
       </li>
     </ul>
+    <button type="submit">Envoyer</button>
   </form>
+
+  <?php
+    include('bdd.php');
+    ?>
+
 </body>
-</html>3
+</html>

@@ -1,4 +1,9 @@
 <?php
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
+        
         // Connexion à la base de données PostgreSQL
         $host = "localhost";
         $port = "5432"; // Port par défaut de PostgreSQL
