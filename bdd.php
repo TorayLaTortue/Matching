@@ -4,12 +4,11 @@
         error_reporting(E_ALL);
 
         
-        // Connexion à la base de données PostgreSQL
         $host = "localhost";
-     
-        $dbname = "Matching"; // Nom de votre base de données
-        $user = "Postgres"; // Votre nom d'utilisateur PostgreSQL
-        $password = "Vemer835"; // Votre mot de passe PostgreSQL
+        $database = "Matching";
+        $username = "Postgres";
+        $password = "Vemer835";
+        
 
         // Connexion à la base de données
         $conn = new mysqli($host, $username, $password, $database);
@@ -27,7 +26,7 @@
         // Parcourir les résultats de la requête
         while ($row = $result->fetch_assoc()) {
         // Afficher les données (vous pouvez ajuster ceci en fonction de votre table)
-        echo "idCosplayeur : " . $row["1"] . "<br>";
+        echo "idCosplayeur : " . $row["idCosplayeur"] . "<br>";
         //echo "Nom : " . $row["nom"] . "<br>";
         //echo "Description : " . $row["description"] . "<br>";
         // Ajoutez d'autres champs selon votre table

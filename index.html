@@ -93,5 +93,27 @@ button {
     </ul>
     <button type="submit">Envoyer</button>
   </form>
+  <div id="resultats"></div>
+
+    <script>
+        function chargerDonnees() {
+            // Créer une instance de l'objet XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Configurer la requête
+            xhr.open('GET', 'bdd.php', true);
+
+            // Gérer la réponse de la requête
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Mettre à jour la section des résultats avec les données de la base de données
+                    document.getElementById('resultats').innerHTML = xhr.responseText;
+                }
+            };
+
+            // Envoyer la requête
+            xhr.send();
+        }
+    </script>
 </body>
 </html>
