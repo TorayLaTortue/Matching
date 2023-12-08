@@ -11,29 +11,34 @@
         $user = "Postgres"; // Votre nom d'utilisateur PostgreSQL
         $password = "Vemer835"; // Votre mot de passe PostgreSQL
 
-        $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+        // Connexion à la base de données
+        $conn = new mysqli($host, $username, $password, $database);
 
         // Vérifier la connexion
-        if (!$conn) {
-            die("Connection failed: " . pg_last_error());
-        }
+        if ($conn->connect_error) {
+        die("Échec de la connexion à la base de données : " . $conn->connect_error);}
 
-        // Exécuter une requête SQL
-        $sql = "SELECT * FROM Tables";  // Remplacez par le nom de votre table
-        $result = pg_query($conn, $sql);
+       // Requête SQL pour récupérer des données d'une table (remplacez "votre_table" par le nom de votre table)
+        $sql = "SELECT * FROM Cosplayeur";
+        $result = $conn->query($sql);
 
-        // Afficher les résultats dans un tableau HTML
+        // Vérifier si la requête a réussi
         if ($result) {
-            echo "<table border='1'><tr><th>ID</th><th>Nom</th></tr>";
-            while($row = pg_fetch_assoc($result)) {
-                echo "<tr><td>" . $row["id"] . "</td><td>" . $row["nom"] . "</td></tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "0 results";
-        }
+        // Parcourir les résultats de la requête
+        while ($row = $result->fetch_assoc()) {
+        // Afficher les données (vous pouvez ajuster ceci en fonction de votre table)
+        echo "idCosplayeur : " . $row["1"] . "<br>";
+        //echo "Nom : " . $row["nom"] . "<br>";
+        //echo "Description : " . $row["description"] . "<br>";
+        // Ajoutez d'autres champs selon votre table
+        echo "<br>";}
+    // Libérer le résultat
+    $result->free();
+    } else {
+    // Afficher une erreur si la requête a échoué
+    echo "Erreur lors de l'exécution de la requête : " . $conn->error;
+    }
 
-        // Fermer la connexion à la base de données
-        pg_close($conn);
-    ?>
-    
+    // Fermer la connexion à la base de données
+    $conn->close();
+?>
