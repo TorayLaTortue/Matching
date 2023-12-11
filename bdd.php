@@ -5,17 +5,17 @@
 
         
         $host = "localhost";
-        $database = "Matching";
-        $username = "Postgres";
+        $dbname = "Matching";
+        $user = "postgres";
         $password = "Vemer835";
         
 
         // Connexion à la base de données
-        $conn = new mysqli($host, $username, $password, $database);
-
-        // Vérifier la connexion
-        if ($conn->connect_error) {
-        die("Échec de la connexion à la base de données : " . $conn->connect_error);}
+        try{
+        $bdd = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);}
+        catch(PDOException $e){// Vérifier la connexion
+        die("Échec de la connexion à la base de données : " . $e->getMessage());}
 
        // Requête SQL pour récupérer des données d'une table (remplacez "votre_table" par le nom de votre table)
         $sql = "SELECT * FROM Cosplayeur";

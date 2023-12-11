@@ -91,9 +91,10 @@ button {
         <textarea id="msg" name="user_message"></textarea>
       </li>
     </ul>
-    <button type="submit">Envoyer</button>
-  </form>
-  <div id="resultats"></div>
+    <button type="button" onclick="chargerDonnees()">Charger les données</button>
+    </form>
+
+    <div id="resultats"></div>
 
     <script>
         function chargerDonnees() {
@@ -114,6 +115,11 @@ button {
             // Envoyer la requête
             xhr.send();
         }
+        
+        // Appeler la fonction lors du chargement de la page (si vous souhaitez charger automatiquement)
+        window.onload = function() {
+            chargerDonnees();
+        };
     </script>
 </body>
 </html>
