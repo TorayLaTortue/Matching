@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="fr">
 <head>
     <title>Formulaire</title>
     <meta charset="utf-8" />
@@ -6,17 +7,24 @@
     form {
   /* On centre le formulaire */
   margin: 0 auto;
-  width: 400px;
+  width: 600px;
+  height: auto;
   /* Le contour du formulaire */
   padding: 1em;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 1em;
+}
+body {
+  background-image: url('fond.jpg'); /* Remplacez 'chemin/vers/votre/image.jpg' par le chemin de votre image */
+  background-size: cover; /* Ajuste la taille de l'image pour couvrir tout le fond */
+  background-position: center
 }
 
 ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: auto;
+  
 }
 
 form li + li {
@@ -76,50 +84,129 @@ button {
 }
     </style>
 </head>
-<form action="bdd.php" method="post">
-    <ul>
-      <li>
-        <label for="name">Nom&nbsp;:</label>
-        <input type="text" id="name" name="user_name" />
-      </li>
-      <li>
-        <label for="mail">E-mail&nbsp;:</label>
-        <input type="email" id="mail" name="user_email" />
-      </li>
-      <li>
-        <label for="msg">Message&nbsp;:</label>
-        <textarea id="msg" name="user_message"></textarea>
-      </li>
-    </ul>
-    <button type="button" onclick="chargerDonnees()">Charger les données</button>
-    </form>
-
-    <div id="resultats"></div>
-
-    <script>
-        function chargerDonnees() {
-            // Créer une instance de l'objet XMLHttpRequest
-            var xhr = new XMLHttpRequest();
-
-            // Configurer la requête
-            xhr.open('GET', 'bdd.php', true);
-
-            // Gérer la réponse de la requête
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Mettre à jour la section des résultats avec les données de la base de données
-                    document.getElementById('resultats').innerHTML = xhr.responseText;
-                }
-            };
-
-            // Envoyer la requête
-            xhr.send();
-        }
+  <body>
+    <form action="bdd.php" method="post">
+      <h1>S'enregistrer </h1>
+        <ul>
+          <li>
+            <label for="name">Nom et Prenom&nbsp;:</label>
+            <input type="text" id="name" name="user_name" />
+          </li>
+          <li>
+            <label for="Age">Age&nbsp;:</label>
+            <label for="annee">Année :</label>
+            <select id="annee" name="annee"></select>
+            
+            <label for="mois">Mois :</label>
+            <select id="mois" name="mois"></select>
         
-        // Appeler la fonction lors du chargement de la page (si vous souhaitez charger automatiquement)
-        window.onload = function() {
-            chargerDonnees();
-        };
-    </script>
-</body>
+            <label for="jour">Jour :</label>
+            <select id="jour" name="jour"></select>
+
+          </li>
+          <li>
+            <ul for="choix convention">Choisissez votre convention préférée  :</ul>
+            <select id="idConvention" name="idConvention">
+                <option value= 1 >Japan expo</option>
+                <option value= 2 >Comiket</option>
+                <option value= 3 >Philippine Comic Con</option>
+            </select>
+          </li>
+          <p>
+            <h2> Détail </h2>
+          </p>
+          <li>
+            <ul for="Main">Votre cosplay est t'il fait main ? :</ul>
+            <input type="checkbox" id="Main" name="Main">
+            <ul for="achete">Votre cosplay a été acheter ? :</ul>
+            <input type="checkbox" id="achete" name="achete">
+
+            <ul for="Qualité">Quel est la qualité de votre cosplay ? </ul>
+            <select id="Qualité" name="Qualité">
+                <option value= "Faible" >Faible</option>
+                <option value= "Moyenne" >Moyenne</option>
+                <option value= "Grande" >Grande</option>
+            </select>
+            <ul for="Niveau ?">Quel est votre niveau dans le cosplay ? ? </ul>
+            <select id="Niveau" name="Niveau">
+                <option value= "débutant" >débutant</option>
+                <option value= "habitué" >habitué</option>
+                <option value= "professionnel" >professionnel</option>
+            </select>
+          </li>
+        </ul>
+        <button type="button" onclick="chargerDonnees()">Sauvegarder les données</button>
+        </form>
+
+        <div id="resultats"></div>
+        <div id="message"></div>
+
+        <script>
+          function convertirDate(annee, mois, jour) {
+            // Ajouter des zéros à gauche si nécessaire
+            mois = mois.toString().padStart(2, '0');
+            jour = jour.toString().padStart(2, '0');
+        
+            // Retourner la date au format "YYYY-MM-DD"
+            return `${annee}-${mois}-${jour}`;
+        }
+
+
+
+                  // Récupérer les éléments select pour les années, les mois et les jours
+                  var selectAnnee = document.getElementById("annee");
+                  var selectMois = document.getElementById("mois");
+                  var selectJour = document.getElementById("jour");
+          
+                  // Année actuelle
+                  var anneeCourante = new Date().getFullYear();
+          
+                  // Boucle pour générer les années de 1900 à l'année actuelle
+                  for (var annee = 1900; annee <= anneeCourante; annee++) {
+                      var optionAnnee = document.createElement("option");
+                      optionAnnee.value = annee;
+                      optionAnnee.text = annee;
+                      selectAnnee.add(optionAnnee);
+                  }
+          
+                  // Boucle pour générer les mois de 1 à 12
+                  for (var mois = 1; mois <= 12; mois++) {
+                      var optionMois = document.createElement("option");
+                      // Utiliser la fonction padStart pour ajouter un 0 devant les chiffres de 1 à 9
+                      optionMois.value = mois.toString().padStart(2, '0');
+                      optionMois.text = mois;
+                      selectMois.add(optionMois);
+                  }
+          
+                  // Boucle pour générer les jours de 1 à 30
+                  for (var jour = 1; jour <= 30; jour++) {
+                      var optionJour = document.createElement("option");
+                      optionJour.value = jour.toString().padStart(2, '0');
+                      optionJour.text = jour;
+                      selectJour.add(optionJour);
+                  }
+                  
+            function chargerDonnees() {
+                // Créer une instance de l'objet XMLHttpRequest
+                var xhr = new XMLHttpRequest();
+
+                // Configurer la requête
+                xhr.open('GET', 'bdd.php', true);
+
+                // Gérer la réponse de la requête
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // Mettre à jour la section des résultats avec les données de la base de données
+                        document.getElementById('resultats').innerHTML = xhr.responseText;
+                        document.getElementById('message').innerText = "Requête PHP envoyé.";
+                    }
+                };
+
+                // Envoyer la requête
+                xhr.send();
+            }
+            
+            
+        </script>
+  </body>
 </html>
