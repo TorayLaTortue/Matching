@@ -85,7 +85,7 @@ button {
     </style>
 </head>
   <body>
-    <form action="bdd.php" method="post">
+    <form action="bdd.php" method="POST">
       <h1>S'enregistrer </h1>
         <ul>
           <li>
@@ -93,7 +93,7 @@ button {
             <input type="text" id="name" name="user_name" />
           </li>
           <li>
-            <label for="Age">Age&nbsp;:</label>
+            <label for="Age" id="Age" name ="Age">Age&nbsp;:</label>
             <label for="annee">Année :</label>
             <select id="annee" name="annee"></select>
             
@@ -118,8 +118,8 @@ button {
           <li>
             <ul for="Main">Votre cosplay est t'il fait main ? :</ul>
             <input type="checkbox" id="Main" name="Main">
-            <ul for="achete">Votre cosplay a été acheter ? :</ul>
-            <input type="checkbox" id="achete" name="achete">
+            <ul for="Acheté">Votre cosplay a été acheter ? :</ul>
+            <input type="checkbox" id="Acheté" name="Acheté">
 
             <ul for="Qualité">Quel est la qualité de votre cosplay ? </ul>
             <select id="Qualité" name="Qualité">
@@ -135,20 +135,23 @@ button {
             </select>
           </li>
         </ul>
-        <button type="button" onclick="chargerDonnees()">Sauvegarder les données</button>
+        <button type="button" onclick="sauvegardeDonnée()">Sauvegarder les données</button>
         </form>
 
         <div id="resultats"></div>
         <div id="message"></div>
 
         <script>
-          function convertirDate(annee, mois, jour) {
-            // Ajouter des zéros à gauche si nécessaire
-            mois = mois.toString().padStart(2, '0');
-            jour = jour.toString().padStart(2, '0');
-        
+          function sauvegardeDonnée() {
+            var anneeSelectionnee = document.getElementById("annee").value;
+            var moisSelectionne = document.getElementById("mois").value;
+            var jourSelectionne = document.getElementById("jour").value;
+
             // Retourner la date au format "YYYY-MM-DD"
-            return `${annee}-${mois}-${jour}`;
+            // Mettre à jour la variable Age dans le formulaire
+            document.getElementById("Age").value = Age;
+            chargerDonnees();
+            return `${anneeSelectionnee}-${moisSelectionne}-${jourSelectionne}`;
         }
 
 
@@ -186,12 +189,13 @@ button {
                       selectJour.add(optionJour);
                   }
                   
+                  
             function chargerDonnees() {
                 // Créer une instance de l'objet XMLHttpRequest
                 var xhr = new XMLHttpRequest();
 
                 // Configurer la requête
-                xhr.open('GET', 'bdd.php', true);
+                xhr.open('POST', 'bdd.php', true);
 
                 // Gérer la réponse de la requête
                 xhr.onreadystatechange = function() {

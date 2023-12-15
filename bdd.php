@@ -21,26 +21,28 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire (ajuster les noms des champs selon votre formulaire)
     $nomPrenom = isset($_POST["user_name"]) ? $_POST["user_name"] : '';
-    $dateNaissance = isset($_POST["dateNaissance"]) ? $_POST["dateNaissance"] : '';
+    $dateNaissance = isset($_POST["Age"]) ? $_POST["Age"] : '';
     $idConvention = isset($_POST["idConvention"]) ? $_POST["idConvention"] : 0;
 
     // Utilisation des opérateurs ternaires pour convertir les valeurs des cases à cocher en booléens
-    $faitMain = isset($_POST["faitMain"]) ? ($_POST["faitMain"] == "on" ? true : false) : false;
-    $achete = isset($_POST["achete"]) ? ($_POST["achete"] == "on" ? true : false) : false;
+    $faitMain = isset($_POST["Main"]) ? ($_POST["Main"] == "on" ? true : false) : false;
+    $achete = isset($_POST["Acheté"]) ? ($_POST["Acheté"] == "on" ? true : false) : false;
 
     $qualite = isset($_POST["Qualité"]) ? $_POST["Qualité"] : '';
     $niveau = isset($_POST["Niveau"]) ? $_POST["Niveau"] : '';
 
-    $sqlMaxId = 'SELECT MAX(idCosplayeur) FROM Cosplayeur';
+    $sqlMaxId = 'SELECT MAX("idCosplayeur") FROM "Cosplayeur"';
+
     $resultMaxId = $bdd->query($sqlMaxId);
     $maxId = $resultMaxId->fetchColumn();
     $newId = $maxId + 1;
 
     // Requête SQL d'insertion pour la table "Cosplayeur"
-    $sqlCosplayeur = 'INSERT INTO "Cosplayeur" (idCosplayeur, NomPrenom, DateNaissance, IdConvention) VALUES (:idCosplayeur, :nomPrenom, :dateNaissance, :idConvention)';
+    $sqlInsertCosplayeur = 'INSERT INTO "Cosplayeur" ("idCosplayeur", "NomPrenom", "Age", "IdConvention") VALUES (:idCosplayeur, :nomPrenom, :dateNaissance, :idConvention)';
+    //$sqlCosplayeur = 'INSERT INTO "Cosplayeur" (idCosplayeur, NomPrenom, DateNaissance, IdConvention) VALUES (:idCosplayeur, :nomPrenom, :dateNaissance, :idConvention)';
 
     // Préparer la requête SQL pour "Cosplayeur"
-    $stmtCosplayeur = $bdd->prepare($sqlCosplayeur);
+    $stmtCosplayeur = $bdd->prepare($sqlInsertCosplayeur);
 
     // Liaison des paramètres pour "Cosplayeur"
     $stmtCosplayeur->bindParam(':nomPrenom', $nomPrenom);
@@ -58,13 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Requête SQL d'insertion pour la table "TypeCosplay"
-    $sqlTypeCosplay = 'INSERT INTO "TypeCosplay" (FaitMain, Achete, Qualite, Niveau, idCosplayeur) VALUES (:faitMain, :achete, :qualite, :niveau, :idCosplayeur)';
+    $sqlInsertTypeCosplay = 'INSERT INTO "TypeCosplay" ("Main", "Acheté", "Qualité", "Niveau", "idCosplayeur") VALUES (:main, :achete, :qualite, :niveau, :idCosplayeur)';
 
     // Préparer la requête SQL pour "TypeCosplay"
-    $stmtTypeCosplay = $bdd->prepare($sqlTypeCosplay);
+    $stmtTypeCosplay = $bdd->prepare($sqlInsertTypeCosplay);
 
     // Liaison des paramètres pour "TypeCosplay"
-    $stmtTypeCosplay->bindParam(':faitMain', $faitMain);
+    $stmtTypeCosplay->bindParam(':main', $main);
     $stmtTypeCosplay->bindParam(':achete', $achete);
     $stmtTypeCosplay->bindParam(':qualite', $qualite);
     $stmtTypeCosplay->bindParam(':niveau', $niveau);
