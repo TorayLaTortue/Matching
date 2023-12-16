@@ -21,13 +21,17 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire (ajuster les noms des champs selon votre formulaire)
     $nomPrenom = isset($_POST["user_name"]) ? $_POST["user_name"] : '';
-    $dateNaissance = isset($_POST["Age"]) ? $_POST["Age"] : '';
+
+    $dateDeNaissance = isset($_POST["DateDeNaissance"]) ? $_POST["DateDeNaissance"] : '';
+    // Initialiser la variable $dateDeNaissance au format attendu par PostgreSQL
+
+    
     $idConvention = isset($_POST["idConvention"]) ? $_POST["idConvention"] : 0;
-
+    
     // Utilisation des opérateurs ternaires pour convertir les valeurs des cases à cocher en booléens
-    $faitMain = isset($_POST["Main"]) ? ($_POST["Main"] == "on" ? true : false) : false;
-    $achete = isset($_POST["Acheté"]) ? ($_POST["Acheté"] == "on" ? true : false) : false;
-
+    $main = isset($_POST["Main"]) && $_POST["Main"] == "on" ? true : false;
+    $achete = isset($_POST["Acheté"]) && $_POST["Acheté"] == "on" ? true : false;
+    
     $qualite = isset($_POST["Qualité"]) ? $_POST["Qualité"] : '';
     $niveau = isset($_POST["Niveau"]) ? $_POST["Niveau"] : '';
 
@@ -38,15 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newId = $maxId + 1;
 
     // Requête SQL d'insertion pour la table "Cosplayeur"
-    $sqlInsertCosplayeur = 'INSERT INTO "Cosplayeur" ("idCosplayeur", "NomPrenom", "Age", "IdConvention") VALUES (:idCosplayeur, :nomPrenom, :dateNaissance, :idConvention)';
-    //$sqlCosplayeur = 'INSERT INTO "Cosplayeur" (idCosplayeur, NomPrenom, DateNaissance, IdConvention) VALUES (:idCosplayeur, :nomPrenom, :dateNaissance, :idConvention)';
+    $sqlInsertCosplayeur = 'INSERT INTO "Cosplayeur" ("idCosplayeur", "NomPrenom", "DateDeNaissance", "idConvention") VALUES (:idCosplayeur, :nomPrenom, :dateDeNaissance, :idConvention)';
+    //$sqlCosplayeur = 'INSERT INTO "Cosplayeur" (idCosplayeur, NomPrenom, DateDeNaissance, IdConvention) VALUES (:idCosplayeur, :nomPrenom, :dateDeNaissance, :idConvention)';
 
     // Préparer la requête SQL pour "Cosplayeur"
     $stmtCosplayeur = $bdd->prepare($sqlInsertCosplayeur);
 
     // Liaison des paramètres pour "Cosplayeur"
     $stmtCosplayeur->bindParam(':nomPrenom', $nomPrenom);
-    $stmtCosplayeur->bindParam(':dateNaissance', $dateNaissance);
+    $stmtCosplayeur->bindParam(':dateDeNaissance', $dateDeNaissance, PDO::PARAM_STR);
     $stmtCosplayeur->bindParam(':idConvention', $idConvention);
     $stmtCosplayeur->bindParam(':idCosplayeur', $newId);
 
@@ -66,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmtTypeCosplay = $bdd->prepare($sqlInsertTypeCosplay);
 
     // Liaison des paramètres pour "TypeCosplay"
-    $stmtTypeCosplay->bindParam(':main', $main);
-    $stmtTypeCosplay->bindParam(':achete', $achete);
+    $stmtTypeCosplay->bindParam(':main', $main, PDO::PARAM_BOOL);
+    $stmtTypeCosplay->bindParam(':achete', $achete, PDO::PARAM_BOOL);
     $stmtTypeCosplay->bindParam(':qualite', $qualite);
     $stmtTypeCosplay->bindParam(':niveau', $niveau);
     $stmtTypeCosplay->bindParam(':idCosplayeur', $newId);

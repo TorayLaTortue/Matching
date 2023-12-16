@@ -15,8 +15,8 @@
   border-radius: 1em;
 }
 body {
-  background-image: url('fond.jpg'); /* Remplacez 'chemin/vers/votre/image.jpg' par le chemin de votre image */
-  background-size: cover; /* Ajuste la taille de l'image pour couvrir tout le fond */
+  background-image: url('fond.jpg'); /* Remplacez 'chemin/vers/votre/imabackground-image.jpg' par le chemin de votre imabackground-image */
+  background-size: cover; /* Ajuste la taille de l'imabackground-image pour couvrir tout le fond */
   background-position: center
 }
 
@@ -90,18 +90,20 @@ button {
         <ul>
           <li>
             <label for="name">Nom et Prenom&nbsp;:</label>
-            <input type="text" id="name" name="user_name" />
+            <input type="text" id="name" name="user_name" autocomplete="name" />
           </li>
           <li>
-            <label for="Age" id="Age" name ="Age">Age&nbsp;:</label>
+            <input type="hidden" id="idDateDeNaissance" name="DateDeNaissance" />
+
+
             <label for="annee">Année :</label>
-            <select id="annee" name="annee"></select>
+            <select id="annee"></select>
             
             <label for="mois">Mois :</label>
-            <select id="mois" name="mois"></select>
+            <select id="mois"></select>
         
             <label for="jour">Jour :</label>
-            <select id="jour" name="jour"></select>
+            <select id="jour"></select>
 
           </li>
           <li>
@@ -118,6 +120,7 @@ button {
           <li>
             <ul for="Main">Votre cosplay est t'il fait main ? :</ul>
             <input type="checkbox" id="Main" name="Main">
+
             <ul for="Acheté">Votre cosplay a été acheter ? :</ul>
             <input type="checkbox" id="Acheté" name="Acheté">
 
@@ -147,9 +150,14 @@ button {
             var moisSelectionne = document.getElementById("mois").value;
             var jourSelectionne = document.getElementById("jour").value;
 
-            // Retourner la date au format "YYYY-MM-DD"
-            // Mettre à jour la variable Age dans le formulaire
-            document.getElementById("Age").value = Age;
+            console.log("Année sélectionnée:", anneeSelectionnee);
+            console.log("Mois sélectionné:", moisSelectionne);
+            console.log("Jour sélectionné:", jourSelectionne);
+            
+            // Mettre à jour la variable DateDeNaissance dans le formulaire
+            var idDateDeNaissance = document.getElementById("idDateDeNaissance");
+            idDateDeNaissance.value = `${anneeSelectionnee}-${moisSelectionne}-${jourSelectionne}`;
+        
             chargerDonnees();
             return `${anneeSelectionnee}-${moisSelectionne}-${jourSelectionne}`;
         }
@@ -190,25 +198,28 @@ button {
                   }
                   
                   
-            function chargerDonnees() {
-                // Créer une instance de l'objet XMLHttpRequest
-                var xhr = new XMLHttpRequest();
-
-                // Configurer la requête
-                xhr.open('POST', 'bdd.php', true);
-
-                // Gérer la réponse de la requête
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        // Mettre à jour la section des résultats avec les données de la base de données
-                        document.getElementById('resultats').innerHTML = xhr.responseText;
-                        document.getElementById('message').innerText = "Requête PHP envoyé.";
-                    }
-                };
-
-                // Envoyer la requête
-                xhr.send();
-            }
+                  function chargerDonnees() {
+                    // Créer une instance de l'objet XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                
+                    // Configurer la requête
+                    xhr.open('POST', 'bdd.php', true);
+                    
+                    // Créer un objet FormData pour envoyer les données du formulaire
+                    var formData = new FormData(document.forms[0]);
+                
+                    // Gérer la réponse de la requête
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            // Mettre à jour la section des résultats avec les données de la base de données
+                            document.getElementById('resultats').innerHTML = xhr.responseText;
+                            document.getElementById('message').innerText = "Requête PHP envoyée.";
+                        }
+                    };
+                
+                    // Envoyer la requête avec les données du formulaire
+                    xhr.send(formData);
+                }
             
             
         </script>
