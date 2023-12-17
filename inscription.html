@@ -210,12 +210,12 @@ button {
                 
                     // Gérer la réponse de la requête
                     xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            // Mettre à jour la section des résultats avec les données de la base de données
-                            document.getElementById('resultats').innerHTML = xhr.responseText;
-                            document.getElementById('message').innerText = "Requête PHP envoyée.";
-                        }
-                    };
+                      if (xhr.readyState == 4 && xhr.status == 200) {
+                          // Mettre à jour la section des résultats avec les données de la base de données
+                          document.getElementById('resultats').innerHTML = xhr.responseText;
+                          console.log("Requête PHP envoyée.");
+                      }
+                  };
                 
                     // Envoyer la requête avec les données du formulaire
                     xhr.send(formData);

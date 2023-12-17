@@ -57,10 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Exécution de la requête pour "Cosplayeur"
     try {
-        $stmtCosplayeur->execute();
-        echo "Données insérées avec succès dans la table Cosplayeur.";
+        $stmtTypeCosplay->execute();
+        echo "Données Cosplayeur insérées avec succès dans la table Cosplayeur.";
     } catch (PDOException $e) {
-        echo "Erreur lors de l'insertion dans la table Cosplayeur : " . $e->getMessage();
+        $errorMessage = "Erreur lors de l'insertion dans la table Cosplayeur : " . $e->getMessage();
+        echo "<script>console.error('$errorMessage');</script>";
     }
 
     // Requête SQL d'insertion pour la table "TypeCosplay"
@@ -80,9 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Exécution de la requête pour "TypeCosplay"
     try {
         $stmtTypeCosplay->execute();
-        echo "Données insérées avec succès dans la table TypeCosplay.";
+        echo "Données Type Cosplay insérées avec succès dans la table TypeCosplay.";
     } catch (PDOException $e) {
-        echo "Erreur lors de l'insertion dans la table TypeCosplay : " . $e->getMessage();
+        $errorMessage = "Erreur lors de l'insertion dans la table TypeCosplay : " . $e->getMessage();
+        echo "<script>console.error('$errorMessage');</script>";
     }
 } else {
     echo "Aucune donnée n'a été soumise.";
