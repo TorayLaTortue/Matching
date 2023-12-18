@@ -86,6 +86,8 @@ button {
 </head>
   <body>
     <form action="bdd.php" method="POST">
+      <button type="button" onclick="redirigerVersSiteRecherche(event)">Recherche de profil</button>
+
       <h1>S'enregistrer </h1>
         <ul>
           <li>
@@ -160,7 +162,8 @@ button {
         
             chargerDonnees();
             return `${anneeSelectionnee}-${moisSelectionne}-${jourSelectionne}`;
-        }
+            return false
+          }
 
 
 
@@ -198,29 +201,33 @@ button {
                   }
                   
                   
-                  function chargerDonnees() {
-                    // Créer une instance de l'objet XMLHttpRequest
-                    var xhr = new XMLHttpRequest();
+          function chargerDonnees() {
+            // Créer une instance de l'objet XMLHttpRequest
+            var xhr = new XMLHttpRequest();
                 
-                    // Configurer la requête
-                    xhr.open('POST', 'bdd.php', true);
+            // Configurer la requête
+            xhr.open('POST', 'bdd.php', true);
                     
-                    // Créer un objet FormData pour envoyer les données du formulaire
-                    var formData = new FormData(document.forms[0]);
+            // Créer un objet FormData pour envoyer les données du formulaire
+            var formData = new FormData(document.forms[0]);
                 
-                    // Gérer la réponse de la requête
-                    xhr.onreadystatechange = function () {
-                      if (xhr.readyState == 4 && xhr.status == 200) {
-                          // Mettre à jour la section des résultats avec les données de la base de données
-                          document.getElementById('resultats').innerHTML = xhr.responseText;
-                          console.log("Requête PHP envoyée.");
-                      }
-                  };
-                
-                    // Envoyer la requête avec les données du formulaire
-                    xhr.send(formData);
-                }
-            
+            // Gérer la réponse de la requête
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState == 4 && xhr.status == 200) {
+                // Mettre à jour la section des résultats avec les données de la base de données
+                document.getElementById('resultats').innerHTML = xhr.responseText;
+                console.log("Requête PHP envoyée.");
+              }
+            };
+            // Envoyer la requête avec les données du formulaire
+            xhr.send(formData);
+          }
+          
+          function redirigerVersSiteRecherche(event) {
+            event.preventDefault();
+            window.location.href = 'http://localhost/Matching/recherche.html';
+            return false
+        }  
             
         </script>
   </body>
