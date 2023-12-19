@@ -24,8 +24,11 @@
         $faitMain = isset($_POST["faitMain"]) ? $_POST["faitMain"] : null;
         $achete = isset($_POST["achete"]) ? $_POST["achete"] : null;
         $nomConvention = isset($_POST["nomConvention"]) ? $_POST["nomConvention"] : '';
-        $qualite = isset($_POST["Qualité"]) ? $_POST["Qualité"] : null;
+        $qualite = isset($_POST["Qualite"]) ? $_POST["Qualite"] : null;
         $niveau = isset($_POST["Niveau"]) ? $_POST["Niveau"] : null;
+        $nomPersonnage = isset($_POST["NomPersonnage"]) ? $_POST["NomPersonnage"] : '';
+        $origineCosplay = isset($_POST["OrigineCosplay"]) ? $_POST["OrigineCosplay"] : '';
+
 
         // Construire la partie WHERE dynamiquement en fonction des paramètres
         $conditions = array();
@@ -34,6 +37,9 @@
         //echo "Valeur de idConvention du formulaire : " . $idConvention . "<br>";
         //echo "Valeur de faitMain du formulaire dans POST : " . $faitMain . "<br>";
         //echo "Valeur de achete du formulaire dans POST : " . $achete . "<br>";
+        //echo "Valeur de idConvention du formulaire : " . $niveau . "<br>";
+        //echo "Valeur de idConvention du formulaire : " . $qualite . "<br>";
+        //echo "Valeur de idConvention du formulaire : " . $origineCosplay . "<br>";
         
 
         
@@ -58,26 +64,41 @@
         }
 
         if (!is_null($qualite)) {
-            $conditions[] = '"TypeCosplay"."Qualité" = :Qualité';
-            $params[':Qualité'] = $qualite;
+            $conditions[] = '"TypeCosplay"."Qualité" = :Qualite';
+            $params[':Qualite'] = $qualite;
         }
     
         if (!is_null($niveau)) {
             $conditions[] = '"TypeCosplay"."Niveau" = :Niveau';
             $params[':Niveau'] = $niveau;
         }
+    
+        if (!empty($origineCosplay)) {
+            $conditions[] = '"IdentitéCosplay"."OrigineCosplay" LIKE :OrigineCosplay';
+            $params[':OrigineCosplay'] = '%' .  $origineCosplay . '%' ;
+        }
+
+        if (!empty($nomPersonnage)) {
+            $conditions[] = '"IdentitéCosplay"."NomPersonnage" LIKE :NomPersonnage';
+            $params[':NomPersonnage'] = '%' . $nomPersonnage . '%';
+        }
+    
+
 
         // Requête SQL avec conditions dynamiques
-        $sql = 'SELECT "Cosplayeur"."idCosplayeur", "Cosplayeur"."NomPrenom", "TypeCosplay"."Main", "TypeCosplay"."Acheté", "TypeCosplay"."Qualité", "TypeCosplay"."Niveau", "Convention"."NomConvention"
-            FROM "Cosplayeur"
-            LEFT JOIN "TypeCosplay" ON "Cosplayeur"."idCosplayeur" = "TypeCosplay"."idCosplayeur"
-            LEFT JOIN "Convention" ON "Cosplayeur"."idConvention" = "Convention"."idConvention"';
+        $sql = 'SELECT "Cosplayeur"."idCosplayeur", "Cosplayeur"."NomPrenom", "TypeCosplay"."Main", "TypeCosplay"."Acheté", "TypeCosplay"."Qualité", "TypeCosplay"."Niveau", "Convention"."NomConvention", "IdentitéCosplay"."NomPersonnage", "IdentitéCosplay"."OrigineCosplay"
+        FROM "Cosplayeur"
+        LEFT JOIN "TypeCosplay" ON "Cosplayeur"."idCosplayeur" = "TypeCosplay"."idCosplayeur"
+        LEFT JOIN "Convention" ON "Cosplayeur"."idConvention" = "Convention"."idConvention"
+        LEFT JOIN "IdentitéCosplay" ON "Cosplayeur"."idCosplayeur" = "IdentitéCosplay"."idCosplayeur"';
+
 
 
         if (!empty($conditions)) {
             $sql .= ' WHERE ' . implode(' AND ', $conditions);
         }
-
+        
+        //echo $sql;
         // Exécuter la requête de recherche dans la base de données
         $stmt = $bdd->prepare($sql);
         $stmt->execute($params);
@@ -86,20 +107,25 @@
     //echo "Valeur de idConvention du formulaire : " . $idConvention . "<br>";
 
 
+    echo "<div class='resultat'>";
     echo "<p>Résultats de la recherche </p>";
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        //echo "ID: " . $row['idCosplayeur'] . "<br>";
-        echo "Nom et Prénom: " . $row['NomPrenom'] . "<br>";
-        echo "Fait main: " . ($row['Main'] ? 'Oui' : 'Non') . "<br>";
-        echo "Acheté: " . ($row['Acheté'] ? 'Oui' : 'Non') . "<br>";
-        echo "Qualité: " . $row['Qualité'] . "<br>";
-        echo "Niveau: " . $row['Niveau'] . "<br>";
-        echo "Convention: " . $row['NomConvention'] . "<br>";
-        echo "<hr>";
-    }
-} else {
-    echo "Aucune donnée n'a été soumise.";
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo "<div class='resultat-individuel'>";
+    echo "<p>Nom et Prénom: " . $row['NomPrenom'] . "</p>";
+    echo "<p>Fait main: " . ($row['Main'] ? 'Oui' : 'Non') . "</p>";
+    echo "<p>Acheté: " . ($row['Acheté'] ? 'Oui' : 'Non') . "</p>";
+    echo "<p>Qualité: " . $row['Qualité'] . "</p>";
+    echo "<p>Niveau: " . $row['Niveau'] . "</p>";
+    echo "<p>Convention: " . $row['NomConvention'] . "</p>";
+    echo "<p>Nom du personnage: " . $row['NomPersonnage'] . "</p>";
+    echo "<p>Origine du cosplay: " . $row['OrigineCosplay'] . "</p>";
+    echo "</div>";
+    echo "<hr>";
 }
+echo "</div>";}
+    else {
+        echo "Aucune donnée n'a été soumise.";
+    }
 
 // Fermer la connexion à la base de données
 $bdd = null;

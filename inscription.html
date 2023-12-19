@@ -1,88 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Formulaire</title>
-    <meta charset="utf-8" />
-    <style type="text/css">
-    form {
-  /* On centre le formulaire */
-  margin: 0 auto;
-  width: 600px;
-  height: auto;
-  /* Le contour du formulaire */
-  padding: 1em;
-  border: 2px solid #ccc;
-  border-radius: 1em;
-}
-body {
-  background-image: url('fond.jpg'); /* Remplacez 'chemin/vers/votre/imabackground-image.jpg' par le chemin de votre imabackground-image */
-  background-size: cover; /* Ajuste la taille de l'imabackground-image pour couvrir tout le fond */
-  background-position: center
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: auto;
-  
-}
-
-form li + li {
-  margin-top: 1em;
-}
-
-label {
-  /* Taille et alignement uniformes */
-  display: inline-block;
-  width: 90px;
-  text-align: right;
-}
-
-input,
-textarea {
-  /* On s'assure que les champs texte ont la même police
-     Par défaut, les zones de texte ont une police à chasse
-     fixe. */
-  font: 1em sans-serif;
-
-  /* Taille uniforme pour des champs */
-  width: 300px;
-  box-sizing: border-box;
-
-  /* On utilise la même bordure que pour le formulaire */
-  border: 1px solid #999;
-}
-
-input:focus,
-textarea:focus {
-  /* On rajoute une mise en avant pour les éléments avec
-     le focus. */
-  border-color: #000;
-}
-
-textarea {
-  /* On aligne les textes sur plusieurs lignes avec leur
-     libellé. */
-  vertical-align: top;
-
-  /* On fournit un peut d'espace pour saisir du texte. */
-  height: 5em;
-
-  /* On permet de redimensionner verticalement. */
-  resize: vertical;
-}
-
-.button {
-  /* On aligne l bout avec les champs texte. */
-  padding-left: 90px; /* La même taille que les libellés */
-}
-
-button {
-  /* Une marge supplémentaire représentant approximativement
-     le même espace qu'entre les libellés et les champs. */
-  margin-left: 0.5em;
-}
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
   <body>
     <form action="inscriptionBDD.php" method="POST">
@@ -138,6 +59,14 @@ button {
                 <option value= "habitué" >habitué</option>
                 <option value= "professionnel" >professionnel</option>
             </select>
+                <li>
+                  <label for="NomPersonnage">NomPersonnage&nbsp;:</label>
+                  <input type="NomPersonnage" id="NomPersonnage" name="NomPersonnage" />
+                </li>
+                <li>
+                  <label for="OrigineCosplay">Jeu du cosplay&nbsp;:</label>
+                  <input type="text" id="OrigineCosplay" name="OrigineCosplay"  />
+                </li>
           </li>
         </ul>
         <button type="button" onclick="sauvegardeDonnée()">Sauvegarder les données</button>

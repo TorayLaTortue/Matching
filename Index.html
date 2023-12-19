@@ -1,24 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            margin: 10px;
+            position: absolute;
+        }
+
+        #button1 {
+            left: 20%;
+        }
+
+        #button2 {
+            left: 80%;
+        }
+    </style>
     <title>Redirection vers d'autres sites</title>
 </head>
+
 <body>
 
     <h1>Choisissez un site :</h1>
 
-    <button onclick="redirigerVersSite1()">inscription</button>
-    <button onclick="redirigerVersSite2()">recherche</button>
+    <button id="button1" onclick="redirigerVersSite('http://localhost/Matching/inscription.html')">inscription</button>
+    <button id="button2" onclick="redirigerVersSite('http://localhost/Matching/recherche.html')">recherche</button>
 
     <script>
-        function redirigerVersSite1() {
-            window.location.href = 'http://localhost/Matching/inscription.html';
+        let teleportCount = 0;
+
+        function redirigerVersSite(url) {
+            if (teleportCount < 3) {
+                teleportButtonRandomly('button1');
+                teleportButtonRandomly('button2');
+                teleportCount++;
+            } else {
+                window.location.href = url;
+            }
         }
 
-        function redirigerVersSite2() {
-            window.location.href = 'http://localhost/Matching/recherche.html';
+        function teleportButtonRandomly(buttonId) {
+            const button = document.getElementById(buttonId);
+            const maxX = window.innerWidth - button.clientWidth;
+            const maxY = window.innerHeight - button.clientHeight;
+            const newX = Math.max(0, Math.min(maxX, Math.floor(Math.random() * maxX)));
+            const newY = Math.max(0, Math.min(maxY, Math.floor(Math.random() * maxY)));
+            button.style.left = newX + 'px';
+            button.style.top = newY + 'px';
         }
     </script>
 

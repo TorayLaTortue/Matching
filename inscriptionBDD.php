@@ -34,6 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $qualite = isset($_POST["Qualité"]) ? $_POST["Qualité"] : '';
     $niveau = isset($_POST["Niveau"]) ? $_POST["Niveau"] : '';
+    $nomPersonnage = isset($_POST["NomPersonnage"]) ? $_POST["NomPersonnage"] : '';
+    $origineCosplay = isset($_POST["OrigineCosplay"]) ? $_POST["OrigineCosplay"] : '';
+
+
 
     $sqlMaxId = 'SELECT MAX("idCosplayeur") FROM "Cosplayeur"';
 
@@ -43,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Requête SQL d'insertion pour la table "Cosplayeur"
     $sqlInsertCosplayeur = 'INSERT INTO "Cosplayeur" ("idCosplayeur", "NomPrenom", "DateDeNaissance", "idConvention") VALUES (:idCosplayeur, :nomPrenom, :dateDeNaissance, :idConvention)';
-    //$sqlCosplayeur = 'INSERT INTO "Cosplayeur" (idCosplayeur, NomPrenom, DateDeNaissance, IdConvention) VALUES (:idCosplayeur, :nomPrenom, :dateDeNaissance, :idConvention)';
 
     // Préparer la requête SQL pour "Cosplayeur"
     $stmtCosplayeur = $bdd->prepare($sqlInsertCosplayeur);
@@ -84,7 +87,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } catch (PDOException $e) {
         echo "Erreur lors de l'insertion dans la table TypeCosplay : " . $e->getMessage();
     }
-} else {
+
+        // Requête SQL d'insertion pour la table "IdentitéCosplay"
+    $sqlInsertIdentiteCosplay = 'INSERT INTO "IdentitéCosplay" ("idCosplayeur", "NomPersonnage", "OrigineCosplay") VALUES (:idCosplayeur, :nomPersonnage, :origineCosplay)';
+
+    // Préparer la requête SQL pour "IdentitéCosplay"
+    $stmtIdentiteCosplay = $bdd->prepare($sqlInsertIdentiteCosplay);
+
+    // Liaison des paramètres pour "IdentitéCosplay"
+    $stmtIdentiteCosplay->bindParam(':nomPersonnage', $nomPersonnage);
+    $stmtIdentiteCosplay->bindParam(':origineCosplay', $origineCosplay);
+    $stmtIdentiteCosplay->bindParam(':idCosplayeur', $newId);
+
+    // Exécution de la requête pour "IdentitéCosplay"
+    try {
+        $stmtIdentiteCosplay->execute();
+        echo "Données insérées avec succès dans la table IdentitéCosplay.";
+    } catch (PDOException $e) {
+        echo "Erreur lors de l'insertion dans la table IdentitéCosplay : " . $e->getMessage();
+    }
+}
+
+else {
     echo "Aucune donnée n'a été soumise.";
 }
 

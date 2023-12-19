@@ -1,111 +1,129 @@
-<!-- Formulaire de recherche -->
-<form id="formRecherche" action="rechercheBDD.php" method="POST">
-    <button type="button" onclick="redirigerVersSiteInscription(event)">S'inscrire</button>
-    <button type="button" onclick="redirigerVersSitePrincipal(event)">Hub</button>
-        <h1>Recherche de profil</h1>
-        <label for="champRecherche">Nom de la personne a recherche :</label>
-        <input type="text" id="champRecherche" name="champRecherche" />
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <form id="formRecherche" action="rechercheBDD.php" method="POST">
+            <button type="button" onclick="redirigerVersSiteInscription(event)">S'inscrire</button>
+            <button type="button" onclick="redirigerVersSitePrincipal(event)">Hub</button>
+                <h1>Recherche de profil</h1>
+                <label for="champRecherche">Nom de la personne a recherche :</label>
+                <input type="text" id="champRecherche" name="champRecherche" />
 
-        <label for="idConvention">Convention :</label>
-        <select id="idConvention" name="idConvention">
-            <option value="9">Toute les convention</option>
-            <option value="1">Japan expo</option>
-            <option value="2">Comiket</option>
-            <option value="3">Philippine Comic Con</option>
-        </select>
+                <label for="idConvention">Convention :</label>
+                <select id="idConvention" name="idConvention">
+                    <option value="9">Toute les convention</option>
+                    <option value="1">Japan expo</option>
+                    <option value="2">Comiket</option>
+                    <option value="3">Philippine Comic Con</option>
+                </select>
 
-        <label for="faitMain">Cosplay fait main :</label>
-        <select id="faitMain" name="faitMain">
-            <option value="9">Tous</option>
-            <option value="1">Oui</option>
-            <option value="0">Non</option>
-        </select>
+                <label for="faitMain">Cosplay fait main :</label>
+                <select id="faitMain" name="faitMain">
+                    <option value="9">Tous</option>
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                </select>
 
-        <label for="achete">Cosplay acheté :</label>
-        <select id="achete" name="achete">
-            <option value="9">Les deux</option>
-            <option value="1">Oui</option>
-            <option value="0">Non</option>
-        </select>
+                <label for="achete">Cosplay acheté :</label>
+                <select id="achete" name="achete">
+                    <option value="9">Les deux</option>
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                </select>
 
-        <label for="qualite">qualite :</label>
-        <select id="qualite" name="qualite">
-            <option value="9">Toute</option>
-            <option value="Faible">Faible</option>
-            <option value="1">Moyenne</option>
-            <option value="2">Grande</option>
-        </select>
+                <label for="Qualite">Qualité :</label>
+                <select id="Qualite" name="Qualite">
+                    <option value="9">Toute</option>
+                    <option value="Faible">Faible</option>
+                    <option value="Moyenne">Moyenne</option>
+                    <option value="Grande">Grande</option>
+                </select>
 
-        <label for="Niveau">Niveau :</label>
-        <select id="Niveau" name="Niveau">
-            <option value="9">Toute</option>
-            <option value="débutant">débutant</option>
-            <option value="habitué">habitué</option>
-            <option value="professionnel">professionnel</option>
-        </select>
+                <label for="Niveau">Niveau :</label>
+                <select id="Niveau" name="Niveau">
+                    <option value="9">Toute</option>
+                    <option value="débutant">débutant</option>
+                    <option value="habitué">habitué</option>
+                    <option value="professionnel">professionnel</option>
+                </select>
 
+            <label for="nomPersonnage">Nom du personnage :</label>
+            <input type="text" id="NomPersonnage" name="NomPersonnage" />
 
-    <button type="button" onclick="effectuerRecherche()">Rechercher</button>
-</form>
+            <label for="OrigineCosplay">Origine du cosplay :</label>
+            <input type="OrigineCosplay" id="OrigineCosplay"  />
 
-<!-- Zone d'affichage des résultats -->
-<div id="resultatsRecherche"></div>
-<script>
-    function effectuerRecherche() {
-        var conventionSelectioner = document.getElementById("idConvention").value;
-        console.log("Convention sélectionnée:", conventionSelectioner);
-    
-        var champRecherche = document.getElementById("champRecherche").value;
-        var faitMain = document.getElementById("faitMain").value;
-        var achete = document.getElementById("achete").value;
-        var qualite = document.getElementById("qualite").value;
-        var niveau = document.getElementById("Niveau").value;
-    
-        // Créer un objet pour stocker les données du formulaire
-        var formData = new FormData();
-    
-        // Ajouter le champ recherche à l'objet formData
-        formData.append('champRecherche', champRecherche);
-    
-        // Ajouter les données du formulaire à l'objet formData si elles ne sont pas égales à 0 ou 3
-        if (conventionSelectioner !== '9') {
-            formData.append('idConvention', conventionSelectioner);
-        }
-        if (faitMain !== '9') {
-            formData.append('faitMain', faitMain);
-        }
-        if (achete !== '9') {
-            formData.append('achete', achete);
-        }
-        if (qualite !== '9') {
-            formData.append('qualite', qualite);
-        }
-        if (niveau !== '9') {
-            formData.append('Niveau', niveau);
-        }
-    
-        // Envoyer une seule requête AJAX avec toutes les données
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'rechercheBDD.php', true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Mettez à jour la zone d'affichage des résultats avec les données renvoyées par le serveur
-                document.getElementById('resultatsRecherche').innerHTML = xhr.responseText;
+            <button type="button" onclick="effectuerRecherche()">Rechercher</button>
+        </form>
+
+        <!-- Zone d'affichage des résultats -->
+        <div id="resultatsRecherche"></div>
+        <script>
+            function effectuerRecherche() {
+                var conventionSelectioner = document.getElementById("idConvention").value;
+                console.log("Convention sélectionnée:", conventionSelectioner);
+            
+                var champRecherche = document.getElementById("champRecherche").value;
+                var faitMain = document.getElementById("faitMain").value;
+                var achete = document.getElementById("achete").value;
+                var qualite = document.getElementById("Qualite").value;
+                var niveau = document.getElementById("Niveau").value;
+                var nomPersonnage = document.getElementById("NomPersonnage").value;
+                var origineCosplay = document.getElementById("OrigineCosplay").value;
+            
+                // Créer un objet pour stocker les données du formulaire
+                var formData = new FormData();
+            
+                // Ajouter le champ recherche à l'objet formData
+                formData.append('champRecherche', champRecherche);
+                formData.append('NomPersonnage', nomPersonnage);
+            
+                // Ajouter les données du formulaire à l'objet formData si elles ne sont pas égales à 0 ou 3
+                if (conventionSelectioner !== '9') {
+                    formData.append('idConvention', conventionSelectioner);
+                }
+                if (faitMain !== '9') {
+                    formData.append('faitMain', faitMain);
+                }
+                if (achete !== '9') {
+                    formData.append('achete', achete);
+                }
+                if (qualite !== '9') {
+                    formData.append('Qualite', qualite);
+                }
+                if (origineCosplay !== '9') {
+                    formData.append('OrigineCosplay', origineCosplay);
+                }
+
+            
+                // Envoyer une seule requête AJAX avec toutes les données
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'rechercheBDD.php', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // Mettez à jour la zone d'affichage des résultats avec les données renvoyées par le serveur
+                        document.getElementById('resultatsRecherche').innerHTML = xhr.responseText;
+                    }
+                };
+            
+                xhr.send(formData);
             }
-        };
-    
-        xhr.send(formData);
-    }
 
-function redirigerVersSiteInscription(event) {
-    event.preventDefault();
-    window.location.href = 'http://localhost/Matching/inscription.html';
-    return false
-}
-function redirigerVersSitePrincipal(event) {
-    event.preventDefault();
-    window.location.href = 'http://localhost/Matching/Index.html';
-    return false
-}    
+        function redirigerVersSiteInscription(event) {
+            event.preventDefault();
+            window.location.href = 'http://localhost/Matching/inscription.html';
+            return false
+        }
+        function redirigerVersSitePrincipal(event) {
+            event.preventDefault();
+            window.location.href = 'http://localhost/Matching/Index.html';
+            return false
+        }    
 
-</script>
+        </script>
+    </head>
+</html>
