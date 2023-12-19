@@ -28,8 +28,8 @@
             <option value="0">Non</option>
         </select>
 
-        <label for="Qualité">Qualité :</label>
-        <select id="Qualité" name="Qualité">
+        <label for="qualite">qualite :</label>
+        <select id="qualite" name="qualite">
             <option value="9">Toute</option>
             <option value="Faible">Faible</option>
             <option value="1">Moyenne</option>
@@ -39,9 +39,9 @@
         <label for="Niveau">Niveau :</label>
         <select id="Niveau" name="Niveau">
             <option value="9">Toute</option>
-            <option value="0">débutant</option>
-            <option value="1">habitué</option>
-            <option value="2">professionnel</option>
+            <option value="débutant">débutant</option>
+            <option value="habitué">habitué</option>
+            <option value="professionnel">professionnel</option>
         </select>
 
 
@@ -58,7 +58,7 @@
         var champRecherche = document.getElementById("champRecherche").value;
         var faitMain = document.getElementById("faitMain").value;
         var achete = document.getElementById("achete").value;
-        var qualite = document.getElementById("Qualité").value;
+        var qualite = document.getElementById("qualite").value;
         var niveau = document.getElementById("Niveau").value;
     
         // Créer un objet pour stocker les données du formulaire
@@ -78,7 +78,7 @@
             formData.append('achete', achete);
         }
         if (qualite !== '9') {
-            formData.append('Qualité', qualite);
+            formData.append('qualite', qualite);
         }
         if (niveau !== '9') {
             formData.append('Niveau', niveau);
