@@ -86,11 +86,12 @@
 
 
         // Requête SQL avec conditions dynamiques
-        $sql = 'SELECT "Cosplayeur"."idCosplayeur", "Cosplayeur"."NomPrenom", "TypeCosplay"."Main", "TypeCosplay"."Acheté", "TypeCosplay"."Qualité", "TypeCosplay"."Niveau", "Convention"."NomConvention", "IdentitéCosplay"."NomPersonnage", "IdentitéCosplay"."OrigineCosplay"
+        $sql = 'SELECT "Cosplayeur"."idCosplayeur", "Cosplayeur"."NomPrenom", "TypeCosplay"."Main", "TypeCosplay"."Acheté", "TypeCosplay"."Qualité", "TypeCosplay"."Niveau", "Convention"."NomConvention", "Convention"."NomPays", "Convention"."NomRegion", "IdentitéCosplay"."NomPersonnage", "IdentitéCosplay"."OrigineCosplay"
         FROM "Cosplayeur"
         LEFT JOIN "TypeCosplay" ON "Cosplayeur"."idCosplayeur" = "TypeCosplay"."idCosplayeur"
         LEFT JOIN "Convention" ON "Cosplayeur"."idConvention" = "Convention"."idConvention"
         LEFT JOIN "IdentitéCosplay" ON "Cosplayeur"."idCosplayeur" = "IdentitéCosplay"."idCosplayeur"';
+
 
 
 
@@ -117,6 +118,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo "<p>Qualité: " . $row['Qualité'] . "</p>";
     echo "<p>Niveau: " . $row['Niveau'] . "</p>";
     echo "<p>Convention: " . $row['NomConvention'] . "</p>";
+    echo "<p>Nom du Pays: " . $row['NomPays'] . "</p>";
+    echo "<p>Nom de la Région: " . $row['NomRegion'] . "</p>";
     echo "<p>Nom du personnage: " . $row['NomPersonnage'] . "</p>";
     echo "<p>Origine du cosplay: " . $row['OrigineCosplay'] . "</p>";
     echo "</div>";
