@@ -24,13 +24,19 @@
         $faitMain = isset($_POST["faitMain"]) ? $_POST["faitMain"] : null;
         $achete = isset($_POST["achete"]) ? $_POST["achete"] : null;
         $nomConvention = isset($_POST["nomConvention"]) ? $_POST["nomConvention"] : '';
+        $qualite = isset($_POST["Qualité"]) ? $_POST["Qualité"] : null;
+        $niveau = isset($_POST["Niveau"]) ? $_POST["Niveau"] : null;
 
         // Construire la partie WHERE dynamiquement en fonction des paramètres
         $conditions = array();
         $params = array();
 
-        echo "Valeur de idConvention du formulaire : " . $idConvention . "<br>";
+        //echo "Valeur de idConvention du formulaire : " . $idConvention . "<br>";
+        //echo "Valeur de faitMain du formulaire dans POST : " . $faitMain . "<br>";
+        //echo "Valeur de achete du formulaire dans POST : " . $achete . "<br>";
+        
 
+        
         if (!empty($champRecherche)) {
             $conditions[] = '"Cosplayeur"."NomPrenom" LIKE :champRecherche';
             $params[':champRecherche'] = '%' . $champRecherche . '%';
@@ -51,11 +57,22 @@
             $params[':idConvention'] = $idConvention;
         }
 
+        if (!is_null($qualite)) {
+            $conditions[] = '"TypeCosplay"."Qualité" = :Qualité';
+            $params[':Qualité'] = $qualite;
+        }
+    
+        if (!is_null($niveau)) {
+            $conditions[] = '"TypeCosplay"."Niveau" = :Niveau';
+            $params[':Niveau'] = $niveau;
+        }
+
         // Requête SQL avec conditions dynamiques
         $sql = 'SELECT "Cosplayeur"."idCosplayeur", "Cosplayeur"."NomPrenom", "TypeCosplay"."Main", "TypeCosplay"."Acheté", "TypeCosplay"."Qualité", "TypeCosplay"."Niveau", "Convention"."NomConvention"
-        FROM "Cosplayeur"
-        LEFT JOIN "TypeCosplay" ON "Cosplayeur"."idCosplayeur" = "TypeCosplay"."idCosplayeur"
-        LEFT JOIN "Convention" ON "Cosplayeur"."idConvention" = "Convention"."idConvention"';
+            FROM "Cosplayeur"
+            LEFT JOIN "TypeCosplay" ON "Cosplayeur"."idCosplayeur" = "TypeCosplay"."idCosplayeur"
+            LEFT JOIN "Convention" ON "Cosplayeur"."idConvention" = "Convention"."idConvention"';
+
 
         if (!empty($conditions)) {
             $sql .= ' WHERE ' . implode(' AND ', $conditions);
@@ -66,10 +83,10 @@
         $stmt->execute($params);
 
     // Afficher les résultats
-    echo "Valeur de idConvention du formulaire : " . $idConvention . "<br>";
+    //echo "Valeur de idConvention du formulaire : " . $idConvention . "<br>";
 
 
-    echo "<p>Résultats de la recherche pour '$champRecherche'</p>";
+    echo "<p>Résultats de la recherche </p>";
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         //echo "ID: " . $row['idCosplayeur'] . "<br>";
         echo "Nom et Prénom: " . $row['NomPrenom'] . "<br>";

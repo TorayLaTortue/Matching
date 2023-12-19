@@ -85,9 +85,9 @@ button {
     </style>
 </head>
   <body>
-    <form action="bdd.php" method="POST">
+    <form action="inscriptionBDD.php" method="POST">
       <button type="button" onclick="redirigerVersSiteRecherche(event)">Recherche de profil</button>
-
+      <button type="button" onclick="redirigerVersSitePrincipal(event)">Hub</button>
       <h1>S'enregistrer </h1>
         <ul>
           <li>
@@ -176,7 +176,7 @@ button {
                   var anneeCourante = new Date().getFullYear();
           
                   // Boucle pour générer les années de 1900 à l'année actuelle
-                  for (var annee = 1900; annee <= anneeCourante; annee++) {
+                  for (var annee = 1965; annee <= anneeCourante; annee++) {
                       var optionAnnee = document.createElement("option");
                       optionAnnee.value = annee;
                       optionAnnee.text = annee;
@@ -206,7 +206,7 @@ button {
             var xhr = new XMLHttpRequest();
                 
             // Configurer la requête
-            xhr.open('POST', 'bdd.php', true);
+            xhr.open('POST', 'inscriptionBDD.php', true);
                     
             // Créer un objet FormData pour envoyer les données du formulaire
             var formData = new FormData(document.forms[0]);
@@ -227,7 +227,13 @@ button {
             event.preventDefault();
             window.location.href = 'http://localhost/Matching/recherche.html';
             return false
-        }  
+        }
+        
+        function redirigerVersSitePrincipal(event) {
+          event.preventDefault();
+          window.location.href = 'http://localhost/Matching/Index.html';
+          return false
+      }
             
         </script>
   </body>
