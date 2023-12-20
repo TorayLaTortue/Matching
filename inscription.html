@@ -96,8 +96,6 @@
             return false
           }
 
-
-
                   // Récupérer les éléments select pour les années, les mois et les jours
                   var selectAnnee = document.getElementById("annee");
                   var selectMois = document.getElementById("mois");
@@ -154,17 +152,17 @@
             xhr.send(formData);
           }
           
-          function redirigerVersSiteRecherche(event) {
-            event.preventDefault();
-            window.location.href = 'http://localhost/Matching/recherche.html';
-            return false
+        function redirigerVersSiteRecherche(event) {
+          event.preventDefault();
+          window.location.href = 'http://localhost/Matching/recherche.html';
+          return false
         }
         
         function redirigerVersSitePrincipal(event) {
           event.preventDefault();
           window.location.href = 'http://localhost/Matching/Index.html';
           return false
-      }
+        }
             
         </script>
   </body>

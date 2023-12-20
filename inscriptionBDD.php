@@ -19,24 +19,17 @@
 
 // Vérifier si des données ont été envoyées depuis le formulaire
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les données du formulaire (ajuster les noms des champs selon votre formulaire)
+    // Récupérer les données du formulaire 
     $nomPrenom = isset($_POST["user_name"]) ? $_POST["user_name"] : '';
-
     $dateDeNaissance = isset($_POST["DateDeNaissance"]) ? $_POST["DateDeNaissance"] : '';
-    // Initialiser la variable $dateDeNaissance au format attendu par PostgreSQL
-
-    
     $idConvention = isset($_POST["idConvention"]) ? $_POST["idConvention"] : 0;
-    
     // Utilisation des opérateurs ternaires pour convertir les valeurs des cases à cocher en booléens
     $main = isset($_POST["Main"]) && $_POST["Main"] == "on" ? true : false;
     $achete = isset($_POST["Acheté"]) && $_POST["Acheté"] == "on" ? true : false;
-    
     $qualite = isset($_POST["Qualité"]) ? $_POST["Qualité"] : '';
     $niveau = isset($_POST["Niveau"]) ? $_POST["Niveau"] : '';
     $nomPersonnage = isset($_POST["NomPersonnage"]) ? $_POST["NomPersonnage"] : '';
     $origineCosplay = isset($_POST["OrigineCosplay"]) ? $_POST["OrigineCosplay"] : '';
-
 
 
     $sqlMaxId = 'SELECT MAX("idCosplayeur") FROM "Cosplayeur"';
@@ -47,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Requête SQL d'insertion pour la table "Cosplayeur"
     $sqlInsertCosplayeur = 'INSERT INTO "Cosplayeur" ("idCosplayeur", "NomPrenom", "DateDeNaissance", "idConvention") VALUES (:idCosplayeur, :nomPrenom, :dateDeNaissance, :idConvention)';
-
     // Préparer la requête SQL pour "Cosplayeur"
     $stmtCosplayeur = $bdd->prepare($sqlInsertCosplayeur);
 
