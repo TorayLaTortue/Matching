@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    
+    background: url('fond.jpg') center/cover no-repeat fixed;
 }
 
 form {
@@ -12,7 +12,7 @@ form {
     border: 1px solid #7c0965;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #79116c;
+    background: url('fond2.jpg') center/cover no-repeat fixed;
 }
 
 h1 {
@@ -23,7 +23,7 @@ label {
     display: block;
     margin: 10px 0 5px;
     border-radius: 25px;
-    background-color: #79116c;
+    
 }
 
 input,
@@ -32,7 +32,7 @@ select {
     padding: 10px;
     margin-bottom: 15px;
     box-sizing: border-box;
-    background-color: #79116c;
+    background-color: #f88fea;
 }
 
 button {
@@ -54,7 +54,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #79116c;
+    background: url('fond2.jpg') center/cover no-repeat fixed;
 }
 
 .resultat {
