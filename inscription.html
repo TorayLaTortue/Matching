@@ -13,7 +13,7 @@
       <h1>S'enregistrer </h1>
         <ul>
           <li>
-            <label for="name">Nom et Prenom&nbsp;:</label>
+            <label for="name">Nom et Prénom&nbsp;:</label>
             <input type="text" id="name" name="user_name" autocomplete="name" />
           </li>
           <li>
@@ -122,7 +122,7 @@
                   }
           
                   // Boucle pour générer les jours de 1 à 30
-                  for (var jour = 1; jour <= 30; jour++) {
+                  for (var jour = 1; jour <= 31; jour++) {
                       var optionJour = document.createElement("option");
                       optionJour.value = jour.toString().padStart(2, '0');
                       optionJour.text = jour;

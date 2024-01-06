@@ -29,6 +29,11 @@
         $nomPersonnage = isset($_POST["NomPersonnage"]) ? $_POST["NomPersonnage"] : '';
         $origineCosplay = isset($_POST["OrigineCosplay"]) ? $_POST["OrigineCosplay"] : '';
 
+        $sqlMaxId = 'SELECT MAX("idCosplayeur") FROM "Cosplayeur"';
+        $resultMaxId = $bdd->query($sqlMaxId);
+        $maxId = $resultMaxId->fetchColumn();
+
+        
 
         // Construire la partie WHERE dynamiquement en fonction des paramètres
         $conditions = array();
@@ -125,7 +130,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo "</div>";
     echo "<hr>";
 }
-echo "</div>";}
+echo "</div>";
+
+
+
+}
+
     else {
         echo "Aucune donnée n'a été soumise.";
     }
